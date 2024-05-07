@@ -1,10 +1,39 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  // const [count, setCount] = useState(0)
+  const [quantity, setQuantity] = useState(10)
+  const[brand, setBrand] = useState("Generic")
+  const[foodType, setFoodType] = useState("Carrots")
+
+
+  const handleChange = (event) => {
+    switch (event.target.name) {
+      case "brand":
+        setBrand(event.target.value);
+        break;
+      case "foodType":
+        setFoodType(event.target.value);
+        break;
+      case "quantity":
+        setQuantity(event.target.value);
+        break;
+    }
+  };
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const newRequest = {
+      brand,
+      foodType,
+      quantity
+    };
+
+    console.log(newRequest)
+  };
 
   return (
     <>
@@ -39,7 +68,7 @@ function App() {
               Brand:
             </div>
             <div className="selectInput">
-              Generic
+              <input placeholder={"generic"} name="brand" id="brand" type="text" onChange={handleChange} value={brand}/>
             </div>
           </div>
           <div className="selectOpt">
@@ -47,7 +76,7 @@ function App() {
               Food Type:
             </div>
             <div className="selectInput">
-              Carrots
+            <input placeholder={"food type"} name="foodType" id="foodType" type="text" onChange={handleChange} value={foodType}/>
             </div>
           </div>
           <div className="selectOpt">
@@ -55,13 +84,13 @@ function App() {
               Quantity (optional):
             </div>
             <div className="quantity">
-              12
+            <input placeholder={"number"} name="quantity" id="quantity" type="number" onChange={handleChange} value={quantity}/>
             </div>
           </div>
           <div className="buttonWrapper">
-            <div className="submitButton">
+            <button className="submitButton" onClick={handleSubmit}>
               Calculate
-            </div>
+            </button>
 
           </div>
 
