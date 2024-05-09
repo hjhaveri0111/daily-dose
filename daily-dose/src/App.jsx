@@ -13,6 +13,7 @@ function App() {
   const [brand, setBrand] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
+
   async function getTheData() {
     setIsLoading(true)
     const [servings, amount ] = await calculateAmountOfFoodNeededToHitDailyCaloricIntake(food, brand)
@@ -21,7 +22,6 @@ function App() {
     // setCount(await calculateAmountOfFoodNeededToHitDailyCaloricIntake(food, brand)[0])
     setIsLoading(false)
   }
-
 
 
 
@@ -113,10 +113,18 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+        <input type='text' onChange={(field) => setBrand(field.target.value)} />
+        <input type='text' onChange={(field) => setFood(field.target.value)} />
+
+        <button onClick={getTheData}></button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
+      {isLoading ?
+      <h1>LOADING</h1>: 
+      <h1>LOADEDE</h1>}
+      <h1>That is {amount} grams</h1>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p> */}
