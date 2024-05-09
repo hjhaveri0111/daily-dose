@@ -1,39 +1,29 @@
-import { useState, useEffect } from 'react'
+/* eslint-disable no-unused-vars */
+import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 import './App.css'
+import { calculateAmountOfFoodNeededToHitDailyCaloricIntake } from './api/apiCalls'
 
 function App() {
-  const [quantity, setQuantity] = useState(10)
-  const[brand, setBrand] = useState("Generic")
-  const[foodType, setFoodType] = useState("Carrots")
+
+  const [count, setCount] = useState(0)
+  const [amount, setAmount] = useState(0)
+  const [food, setFood] = useState("")
+  const [brand, setBrand] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+
+  async function getTheData() {
+    setIsLoading(true)
+    const [servings, amount ] = await calculateAmountOfFoodNeededToHitDailyCaloricIntake(food, brand)
+    // setCount(servings)
+    setAmount(amount)
+    // setCount(await calculateAmountOfFoodNeededToHitDailyCaloricIntake(food, brand)[0])
+    setIsLoading(false)
+  }
 
 
-  const handleChange = (event) => {
-    switch (event.target.name) {
-      case "brand":
-        setBrand(event.target.value);
-        break;
-      case "foodType":
-        setFoodType(event.target.value);
-        break;
-      case "quantity":
-        setQuantity(event.target.value);
-        break;
-    }
-  };
 
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newRequest = {
-      brand,
-      foodType,
-      quantity
-    };
-
-    console.log(newRequest)
-  };
 
   return (
     <>
@@ -68,37 +58,39 @@ function App() {
               Brand:
             </div>
             <div className="selectInput">
-              <input placeholder={"generic"} name="brand" id="brand" type="text" onChange={handleChange} value={brand}/>
-            </div>
+            <input type='text' onChange={(field) => setBrand(field.target.value)} />            </div>
           </div>
           <div className="selectOpt">
             <div className="selectTitle">
               Food Type:
             </div>
             <div className="selectInput">
-            <input placeholder={"food type"} name="foodType" id="foodType" type="text" onChange={handleChange} value={foodType}/>
-            </div>
+            <input type='text' onChange={(field) => setFood(field.target.value)} />            </div>
           </div>
           <div className="selectOpt">
             <div className="selectTitle">
               Quantity (optional):
             </div>
             <div className="quantity">
-            <input placeholder={"number"} name="quantity" id="quantity" type="number" onChange={handleChange} value={quantity}/>
-            </div>
+              <button onClick={() => setCount((count) => count + 1)}>
+              {count}
+            </button>           
+           </div>
           </div>
           <div className="buttonWrapper">
-            <button className="submitButton" onClick={handleSubmit}>
-              Calculate
-            </button>
-
+            <button  className="submitButton" onClick={getTheData}></button>
+            
           </div>
 
         </div>
         
 
         <div className="rightBody">
-          right
+
+          {isLoading ?
+        <h1>LOADING</h1>: 
+        <h1>LOADEDED HEHE</h1>}
+        <h1>That is {amount} grams</h1>
         </div>
       
       </div>
