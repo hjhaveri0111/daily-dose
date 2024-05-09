@@ -33,3 +33,4 @@ export async function calculateAmountOfFoodNeededToHitDailyCaloricIntake(
 
   return [(AVERAGE_DAILY_CALORIC_INTAKE / calories).toFixed(2), amountOfFoodToHitIntake];
 }
+
